@@ -7,6 +7,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothThinking", "SlothThink
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothThinking.Unit.Tests", "SlothThinking.Unit.Tests\SlothThinking.Unit.Tests.csproj", "{CBDB0B61-A774-4F59-82C2-7BBA430E59BE}"
 EndProject
+Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothThinking.WebApp", "SlothThinking.WebApp\SlothThinking.WebApp.csproj", "{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -21,6 +23,10 @@ Global
 		{CBDB0B61-A774-4F59-82C2-7BBA430E59BE}.Debug|Any CPU.Build.0 = Debug|Any CPU
 		{CBDB0B61-A774-4F59-82C2-7BBA430E59BE}.Release|Any CPU.ActiveCfg = Release|Any CPU
 		{CBDB0B61-A774-4F59-82C2-7BBA430E59BE}.Release|Any CPU.Build.0 = Release|Any CPU
+		{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}.Debug|Any CPU.ActiveCfg = Debug|Any CPU
+		{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}.Debug|Any CPU.Build.0 = Debug|Any CPU
+		{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}.Release|Any CPU.ActiveCfg = Release|Any CPU
+		{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}.Release|Any CPU.Build.0 = Release|Any CPU
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE

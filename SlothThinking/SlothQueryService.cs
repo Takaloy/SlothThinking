@@ -9,7 +9,7 @@ namespace SlothThinking
 {
     public interface ISlothQueryService
     {
-        Task<IEnumerable<ISlothTeam>> GetTeams(int division);
+        Task<IEnumerable<ISlothTeamInfo>> GetTeams(int division);
         Task<IEnumerable<ISloth>> GetPlayers(int teamId);
     }
 
@@ -23,12 +23,12 @@ namespace SlothThinking
             _restClient = restClient ?? throw new ArgumentNullException(nameof(restClient));
         }
 
-        public async Task<IEnumerable<ISlothTeam>> GetTeams(int division)
+        public async Task<IEnumerable<ISlothTeamInfo>> GetTeams(int division)
         {
             var restRequest = new RestRequest($"/divisions/{division}/teams");
             var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT_IN_SECONDS));
 
-            var response = await _restClient.ExecuteTaskAsync<List<SlothTeam>>(restRequest, cancellationToken.Token);
+            var response = await _restClient.ExecuteTaskAsync<List<SlothTeamInfo>>(restRequest, cancellationToken.Token);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");

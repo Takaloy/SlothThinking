@@ -2,14 +2,14 @@
 
 namespace SlothThinking
 {
-    public interface ISlothTeam
+    public interface ISlothTeamInfo
     {
         int Id { get; }
         string Title { get; }
         int SlothRating { get; }
     }
 
-    public class SlothTeam : ISlothTeam, IEquatable<ISlothTeam>
+    public class SlothTeamInfo : ISlothTeamInfo, IEquatable<ISlothTeamInfo>
     {
         public int Id { get; set; }
         public string Title { get; set; }
@@ -25,10 +25,10 @@ namespace SlothThinking
             if (ReferenceEquals(null, obj)) return false;
             if (ReferenceEquals(this, obj)) return true;
             if (obj.GetType() != this.GetType()) return false;
-            return Equals((ISlothTeam) obj);
+            return Equals((ISlothTeamInfo) obj);
         }
 
-        public bool Equals(ISlothTeam other)
+        public bool Equals(ISlothTeamInfo other)
         {
             if (ReferenceEquals(null, other)) return false;
             if (ReferenceEquals(this, other)) return true;
@@ -40,12 +40,12 @@ namespace SlothThinking
             return Id;
         }
 
-        public static bool operator ==(SlothTeam left, SlothTeam right)
+        public static bool operator ==(SlothTeamInfo left, SlothTeamInfo right)
         {
             return Equals(left, right);
         }
 
-        public static bool operator !=(SlothTeam left, SlothTeam right)
+        public static bool operator !=(SlothTeamInfo left, SlothTeamInfo right)
         {
             return !Equals(left, right);
         }
