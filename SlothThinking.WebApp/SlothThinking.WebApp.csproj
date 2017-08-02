@@ -89,12 +89,13 @@
     <Content Include="Web.config" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="CustomModuleBuilder.cs" />
+    <Compile Include="Installation\ContainerRegistration.cs" />
+    <Compile Include="Installation\CustomModuleBuilder.cs" />
     <Compile Include="Domain\LoungeTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
-    <Compile Include="ServiceBootstrapper.cs" />
+    <Compile Include="Installation\ServiceBootstrapper.cs" />
     <Compile Include="Domain\SlothAggregationService.cs" />
-    <Compile Include="SlothModule.cs" />
+    <Compile Include="Modules\SlothModule.cs" />
   </ItemGroup>
   <ItemGroup>
     <ProjectReference Include="..\SlothThinking\SlothThinking.csproj">

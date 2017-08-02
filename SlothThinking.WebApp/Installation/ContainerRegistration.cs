@@ -1,25 +1,8 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Web;
-using Nancy;
-using Nancy.Bootstrapper;
 using Nancy.TinyIoc;
 using RestSharp;
 
 namespace SlothThinking.WebApp
 {
-    public class ServiceBootstrapper : DefaultNancyBootstrapper
-    {
-        protected override void ConfigureApplicationContainer(TinyIoCContainer container)
-        {
-
-            base.ConfigureApplicationContainer(container);
-            var helper = new ContainerRegistration(container);
-            helper.Register();
-        }
-    }
-
     public class ContainerRegistration
     {
         private readonly TinyIoCContainer _container;
