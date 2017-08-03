@@ -1,17 +1,11 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading;
-using System.Threading.Tasks;
-using NSubstitute;
+﻿using System.Linq;
 using NUnit.Framework;
 using RestSharp;
 
 namespace SlothThinking.Unit.Tests
 {
     [TestFixture]
-    public class SlothTeamTests
+    public class SlothQueryServiceTests
     {
         private const string HEROES_LOUNGE_URL = "https://heroeslounge.gg/api/v1/";
         #region spam

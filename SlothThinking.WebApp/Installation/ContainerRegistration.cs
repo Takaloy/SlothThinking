@@ -14,9 +14,13 @@ namespace SlothThinking.WebApp
 
         public void Register()
         {
-            _container.Register<IRestClient>((c, p) => new RestClient("https://heroeslounge.gg/api/v1/"));
-            _container.Register<ISlothQueryService, SlothQueryService>();
-            _container.Register<SlothAggregationService>();
+            _container.Register<ISlothQueryService>((c, p) => new SlothQueryService(new RestClient("https://heroeslounge.gg/api/v1/")));
+            _container.Register<ISlothAggregationService, SlothAggregationService>();
+            _container.Register<ISlothRatingsCalculator, WeightedSlothRatingsCalculator>();
+
+            _container.Register<IHotsLogsInfoService>((c, p) => new HotsLogsInfoService(
+                new RestClient("https://api.hotslogs.com/"),
+                _container.Resolve<ISlothRatingsCalculator>()));
         }
     }
 }

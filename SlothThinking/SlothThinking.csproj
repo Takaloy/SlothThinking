@@ -43,6 +43,11 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
+    <Compile Include="HotsLogsInfoService.cs" />
+    <Compile Include="HotsLogsPlayerProfile.cs" />
+    <Compile Include="LoungeTeam.cs" />
+    <Compile Include="SlothAggregationService.cs" />
+    <Compile Include="WeightedSlothRatingsCalculator.cs" />
     <Compile Include="Sloth.cs" />
     <Compile Include="SlothQueryService.cs" />
     <Compile Include="SlothTeam.cs" />

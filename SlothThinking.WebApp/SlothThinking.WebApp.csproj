@@ -91,10 +91,8 @@
   <ItemGroup>
     <Compile Include="Installation\ContainerRegistration.cs" />
     <Compile Include="Installation\CustomModuleBuilder.cs" />
-    <Compile Include="Domain\LoungeTeam.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
     <Compile Include="Installation\ServiceBootstrapper.cs" />
-    <Compile Include="Domain\SlothAggregationService.cs" />
     <Compile Include="Modules\SlothModule.cs" />
   </ItemGroup>
   <ItemGroup>

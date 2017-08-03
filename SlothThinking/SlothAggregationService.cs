@@ -3,27 +3,28 @@ using System.Collections.Generic;
 using System.Linq;
 using System.Threading.Tasks;
 
-namespace SlothThinking.WebApp
+namespace SlothThinking
 {
-    public class SlothAggregationService
+    public interface ISlothAggregationService
+    {
+        Task<IEnumerable<ILoungeTeam>> Get(int division);
+    }
+
+    public class SlothAggregationService : ISlothAggregationService
     {
         private readonly ISlothQueryService _slothQueryService;
 
         public SlothAggregationService(ISlothQueryService slothQueryService)
         {
-            if (slothQueryService == null) throw new ArgumentNullException(nameof(slothQueryService));
+            if (slothQueryService == null)
+                throw new ArgumentNullException(nameof(slothQueryService));
+
             _slothQueryService = slothQueryService;
         }
 
-        public async Task<IEnumerable<ILoungeTeam>> Get(int division, string team = null)
+        public async Task<IEnumerable<ILoungeTeam>> Get(int division)
         {
             var teams = await _slothQueryService.GetTeams(division);
-
-            if (!string.IsNullOrEmpty(team))
-            {
-                team = team.ToLower();
-                teams = teams.Where(x => x.Title.ToLower().Contains(team));
-            }
 
             var result = new List<ILoungeTeam>();
             foreach (var slothTeam in teams)

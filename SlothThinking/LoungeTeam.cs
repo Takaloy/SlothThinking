@@ -1,7 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 
-namespace SlothThinking.WebApp
+namespace SlothThinking
 {
     public interface ILoungeTeam : ISlothTeamInfo
     {
@@ -11,6 +11,7 @@ namespace SlothThinking.WebApp
     public class LoungeTeam : ILoungeTeam
     {
         private readonly ISlothTeamInfo _teamInfo;
+
         public LoungeTeam(ISlothTeamInfo teamInfo, IEnumerable<ISloth> sloths)
         {
             if (teamInfo == null) throw new ArgumentNullException(nameof(teamInfo));

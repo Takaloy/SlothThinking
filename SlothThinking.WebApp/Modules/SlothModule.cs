@@ -1,17 +1,17 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Threading.Tasks;
 using Nancy;
-using Nancy.Routing;
 
 namespace SlothThinking.WebApp
 {
     public class SlothModule : NancyModule
     {
-        private readonly SlothAggregationService _service;
+        private readonly ISlothAggregationService _service;
 
-        public SlothModule(SlothAggregationService service)
+        public SlothModule(ISlothAggregationService service)
         {
+            if (service == null) throw new ArgumentNullException(nameof(service));
+
             _service = service;
 
             Get["/v1/teams", true] =
@@ -21,8 +21,7 @@ namespace SlothThinking.WebApp
         private async Task<dynamic> GetTeams(dynamic parameters)
         {
             int divisionId = int.Parse(Request.Query["division"]);
-            string team = Request.Query["team"]?.ToString();
-            return await _service.Get(divisionId, team);
+            return await _service.Get(divisionId);
         }
     }
 }
