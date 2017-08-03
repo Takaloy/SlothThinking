@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Nancy;
+using Nancy.ModelBinding;
 using Nancy.Responses;
 
 namespace SlothThinking.WebApp
@@ -11,12 +12,19 @@ namespace SlothThinking.WebApp
 
         public SlothModule(ISlothAggregationService service)
         {
-            if (service == null) throw new ArgumentNullException(nameof(service));
+            if (service == null)
+                throw new ArgumentNullException(nameof(service));
 
             _service = service;
 
             Get["/v1/teams", true] =
                 async (parameters, ct) => await GetTeams(parameters);
+
+            Post["/v1/teams", true] = async (x, ct) =>
+            {
+                var request = this.Bind<TeamsRequest>();
+                return await _service.Get(request.Division);
+            };
         }
 
         private async Task<dynamic> GetTeams(dynamic parameters)
@@ -28,8 +36,13 @@ namespace SlothThinking.WebApp
                     StatusCode = HttpStatusCode.BadRequest
                 };
 
-            int divisionId = int.Parse(o);
-            return await _service.Get(divisionId);
+            int division = int.Parse(o);
+            return await _service.Get(division);
         }
+    }
+
+    public class TeamsRequest
+    {
+        public int Division { get; set; }
     }
 }
