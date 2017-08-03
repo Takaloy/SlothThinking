@@ -1,4 +1,5 @@
-﻿using System.Linq;
+﻿using System.Collections.Generic;
+using System.Linq;
 using NUnit.Framework;
 using RestSharp;
 
@@ -43,6 +44,15 @@ namespace SlothThinking.Unit.Tests
             var players = slothService.GetPlayers(teamId).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Assert.That(players.Count(), Is.GreaterThan(0));
+        }
+
+        [Test]
+        public void CanGetReplaysForMatches()
+        {
+            var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
+            var replays = slothService.GetReplaysForMatch(119).ConfigureAwait(false).GetAwaiter().GetResult();
+
+            Assert.That(replays.Count(), Is.EqualTo(2));
         }
     }
 }

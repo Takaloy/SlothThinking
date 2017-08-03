@@ -3,6 +3,7 @@ using System.Collections.Generic;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
+using Newtonsoft.Json;
 using RestSharp;
 
 namespace SlothThinking
@@ -41,6 +42,27 @@ namespace SlothThinking
                 throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");
 
             return response.Data;
+        }
+
+        /// <summary>
+        /// it is annoying having to have a seperate package (newtonsoft) to manage this.
+        /// submitted https://github.com/kealsera/rikki/issues/30 
+        /// </summary>
+        /// <param name="matchId"></param>
+        /// <returns></returns>
+        public async Task<IEnumerable<ILoungeReplay>> GetReplaysForMatch(int matchId)
+        {
+            var restRequest = new RestRequest($"/matches/{matchId}/replays");
+            restRequest.AddHeader("Accept", "application/json");
+            var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT_IN_SECONDS));
+
+            var response = await _restClient.ExecuteTaskAsync(restRequest, cancellationToken.Token);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");
+
+            var content = JsonConvert.DeserializeObject<List<LoungeReplay>>(response.Content);
+            return content;
         }
     }
 }
