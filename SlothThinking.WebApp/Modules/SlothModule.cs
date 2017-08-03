@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Threading.Tasks;
 using Nancy;
+using Nancy.Responses;
 
 namespace SlothThinking.WebApp
 {
@@ -20,7 +21,14 @@ namespace SlothThinking.WebApp
 
         private async Task<dynamic> GetTeams(dynamic parameters)
         {
-            int divisionId = int.Parse(Request.Query["division"]);
+            var o = Request.Query["division"];
+            if (!o.HasValue)
+                return new JsonResponse("the parameter division must be specified", new DefaultJsonSerializer())
+                {
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+
+            int divisionId = int.Parse(o);
             return await _service.Get(divisionId);
         }
     }
