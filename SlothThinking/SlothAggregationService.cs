@@ -1,5 +1,6 @@
 using System;
 using System.Collections.Generic;
+using System.Linq;
 using System.Threading.Tasks;
 
 namespace SlothThinking
@@ -23,16 +24,20 @@ namespace SlothThinking
 
         public async Task<IEnumerable<ILoungeTeam>> Get(int division)
         {
+            if (division < 1 || division > 5)
+                throw new ArgumentException($"don't think we have division {division} .. ");    //https://heroeslounge.gg/api/v1/divisions/ service for checks in future
+
             var teams = await _slothQueryService.GetTeams(division);
 
-            var result = new List<ILoungeTeam>();
-            foreach (var slothTeam in teams)
-            {
-                var players = await _slothQueryService.GetPlayers(slothTeam.Id);
-                result.Add(new LoungeTeam(slothTeam, players));
-            }
+            var tasks = teams.Select(Get).ToList();
+            return (await Task.WhenAll(tasks)).ToList();
+        }
 
-            return result;
+        private async Task<ILoungeTeam> Get(ISlothTeamInfo slothTeam)
+        {
+            var players = await _slothQueryService.GetPlayers(slothTeam.Id);
+            var loungeTeam = new LoungeTeam(slothTeam, players);
+            return loungeTeam;
         }
     }
 }

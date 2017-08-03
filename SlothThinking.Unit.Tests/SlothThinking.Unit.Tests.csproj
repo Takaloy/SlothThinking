@@ -50,6 +50,7 @@
   </ItemGroup>
   <ItemGroup>
     <Compile Include="HotsLogsInfoServiceTests.cs" />
+    <Compile Include="SlothAggregationServiceTests.cs" />
     <Compile Include="SlothRatingsCalculatorTests.cs" />
     <Compile Include="SlothQueryServiceTests.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />

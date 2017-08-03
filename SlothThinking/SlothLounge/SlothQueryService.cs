@@ -10,7 +10,7 @@ namespace SlothThinking
     public class SlothQueryService : ISlothQueryService
     {
         private readonly IRestClient _restClient;
-        private const int TIMEOUT_IN_SECONDS = 2;
+        private const int TIMEOUT_IN_SECONDS = 5;
 
         public SlothQueryService(IRestClient restClient)
         {
