@@ -43,18 +43,27 @@
     <Reference Include="System.Xml" />
   </ItemGroup>
   <ItemGroup>
-    <Compile Include="HotsLogsInfoService.cs" />
-    <Compile Include="HotsLogsPlayerProfile.cs" />
+    <Compile Include="HotsLogs\GameMode.cs" />
+    <Compile Include="HotsLogs\HotsLogsInfoService.cs" />
+    <Compile Include="HotsLogs\HotsLogsPlayerProfile.cs" />
+    <Compile Include="HotsLogs\IHotsLogsInfoService.cs" />
+    <Compile Include="HotsLogs\IHotsLogsPlayerProfile.cs" />
+    <Compile Include="HotsLogs\LeaderboardRanking.cs" />
+    <Compile Include="ILoungeTeam.cs" />
     <Compile Include="LoungeTeam.cs" />
     <Compile Include="SlothAggregationService.cs" />
+    <Compile Include="SlothLounge\ISloth.cs" />
+    <Compile Include="SlothLounge\ISlothQueryService.cs" />
+    <Compile Include="SlothLounge\ISlothTeamInfo.cs" />
     <Compile Include="WeightedSlothRatingsCalculator.cs" />
-    <Compile Include="Sloth.cs" />
-    <Compile Include="SlothQueryService.cs" />
-    <Compile Include="SlothTeam.cs" />
+    <Compile Include="SlothLounge\Sloth.cs" />
+    <Compile Include="SlothLounge\SlothQueryService.cs" />
+    <Compile Include="SlothLounge\SlothTeamInfo.cs" />
     <Compile Include="Properties\AssemblyInfo.cs" />
   </ItemGroup>
   <ItemGroup>
     <None Include="packages.config" />
   </ItemGroup>
+  <ItemGroup />
   <Import Project="$(MSBuildToolsPath)\Microsoft.CSharp.targets" />
 </Project>

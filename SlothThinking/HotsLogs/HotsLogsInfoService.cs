@@ -8,10 +8,6 @@ using RestSharp;
 
 namespace SlothThinking
 {
-    public interface IHotsLogsInfoService
-    {
-        Task<int> GetRatingFor(ILoungeTeam team);
-    }
 
     public class HotsLogsInfoService : IHotsLogsInfoService
     {
@@ -20,8 +16,8 @@ namespace SlothThinking
 
         public HotsLogsInfoService(IRestClient restClient, ISlothRatingsCalculator calculator)
         {
-            if (restClient == null)
-                throw new ArgumentNullException(nameof(restClient));
+            if (restClient == null) throw new ArgumentNullException(nameof(restClient));
+            if (calculator == null) throw new ArgumentNullException(nameof(calculator));
 
             _restClient = restClient;
             _calculator = calculator;
@@ -33,7 +29,7 @@ namespace SlothThinking
 
             foreach (var player in team.Players)
             {
-                var rating = await GetRatingForPlayer(player);
+                var rating = await GetRatingFor(player);
 
                 if (rating > 0)
                     playerWithRatings.Add(player, rating);
@@ -46,7 +42,7 @@ namespace SlothThinking
             return totalRating / playerWithRatings.Count;
         }
 
-        private async Task<int> GetRatingForPlayer(ISloth player)
+        public async Task<int> GetRatingFor(ISloth player)
         {
             var restRequest = new RestRequest($"/Public/Players/2/{player.BattleTag.Replace("#", "_")}");
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));

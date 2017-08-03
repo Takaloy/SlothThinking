@@ -9,6 +9,8 @@ Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothThinking.Unit.Tests", 
 EndProject
 Project("{FAE04EC0-301F-11D3-BF4B-00C04F79EFBC}") = "SlothThinking.WebApp", "SlothThinking.WebApp\SlothThinking.WebApp.csproj", "{18B1D8AE-C152-4BA5-BF78-66074F31D6D3}"
 EndProject
+Project("{2150E333-8FDC-42A3-9474-1A3956D46DE8}") = "Tests", "Tests", "{1F001B7E-7A1E-44CF-BC35-07CC99C5A7C4}"
+EndProject
 Global
 	GlobalSection(SolutionConfigurationPlatforms) = preSolution
 		Debug|Any CPU = Debug|Any CPU
@@ -30,5 +32,8 @@ Global
 	EndGlobalSection
 	GlobalSection(SolutionProperties) = preSolution
 		HideSolutionNode = FALSE
+	EndGlobalSection
+	GlobalSection(NestedProjects) = preSolution
+		{CBDB0B61-A774-4F59-82C2-7BBA430E59BE} = {1F001B7E-7A1E-44CF-BC35-07CC99C5A7C4}
 	EndGlobalSection
 EndGlobal

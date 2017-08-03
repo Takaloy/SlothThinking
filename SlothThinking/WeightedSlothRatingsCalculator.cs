@@ -1,6 +1,4 @@
-﻿using System;
-
-namespace SlothThinking
+﻿namespace SlothThinking
 {
     public interface ISlothRatingsCalculator
     {

@@ -3,11 +3,6 @@ using System.Collections.Generic;
 
 namespace SlothThinking
 {
-    public interface ILoungeTeam : ISlothTeamInfo
-    {
-        IEnumerable<ISloth> Players { get; }
-    }
-
     public class LoungeTeam : ILoungeTeam
     {
         private readonly ISlothTeamInfo _teamInfo;

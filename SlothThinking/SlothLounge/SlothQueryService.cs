@@ -7,12 +7,6 @@ using RestSharp;
 
 namespace SlothThinking
 {
-    public interface ISlothQueryService
-    {
-        Task<IEnumerable<ISlothTeamInfo>> GetTeams(int division);
-        Task<IEnumerable<ISloth>> GetPlayers(int teamId);
-    }
-
     public class SlothQueryService : ISlothQueryService
     {
         private readonly IRestClient _restClient;
