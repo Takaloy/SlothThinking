@@ -27,9 +27,12 @@ namespace SlothThinking
         {
             var playerWithRatings = new Dictionary<ISloth, int>();
 
-            foreach (var player in team.Players)
+            var tasks = team.Players.Select(GetSlothRatingsFor).ToList();
+
+            foreach (var tuple in await Task.WhenAll(tasks))
             {
-                var rating = await GetRatingFor(player);
+                var player = tuple.Item1;
+                var rating = tuple.Item2;
 
                 if (rating > 0)
                     playerWithRatings.Add(player, rating);
@@ -40,6 +43,12 @@ namespace SlothThinking
 
             var totalRating = playerWithRatings.Values.Sum();
             return totalRating / playerWithRatings.Count;
+        }
+
+        private async Task<Tuple<ISloth, int>> GetSlothRatingsFor(ISloth player)
+        {
+            var rating = await GetRatingFor(player);
+            return new Tuple<ISloth, int>(player, rating);
         }
 
         public async Task<int> GetRatingFor(ISloth player)
