@@ -1,12 +1,10 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿using System.Linq;
 using NUnit.Framework;
 using RestSharp;
 
 namespace SlothThinking.Unit.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class HotsLogsInfoServiceTests
     {
         private const string HEROES_LOUNGE_URL = "https://heroeslounge.gg/api/v1/";

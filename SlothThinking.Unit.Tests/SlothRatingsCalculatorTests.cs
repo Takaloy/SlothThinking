@@ -1,8 +1,4 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
+﻿using System.Collections.Generic;
 using NUnit.Framework;
 
 namespace SlothThinking.Unit.Tests
@@ -10,36 +6,14 @@ namespace SlothThinking.Unit.Tests
     [TestFixture]
     public class SlothRatingsCalculatorTests
     {
-        [TestCase(100,200,300, 170)]
-        [TestCase(500,500,500, 500)]
-        public void GivenASloth_WithAllModesAvailable_ShouldCalculateCorrectly(int heroLeagueRating, int teamLeagueRating, 
+        [TestCase(100, 200, 300, 170)]
+        [TestCase(500, 500, 500, 500)]
+        public void GivenASloth_WithAllModesAvailable_ShouldCalculateCorrectly(int heroLeagueRating,
+            int teamLeagueRating,
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = heroLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = teamLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = unrankedRating
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, true, true, true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -51,30 +25,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = teamLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = unrankedRating
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, false, true, true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -86,30 +37,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = heroLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = unrankedRating
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, true, false, true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -122,30 +50,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = heroLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = teamLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = null
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, true, true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -157,30 +62,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = heroLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = null
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -192,30 +74,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = teamLeagueRating
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = null
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, hasTeamLeague: true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -227,30 +86,7 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
-            {
-                LeaderboardRankings = new List<LeaderboardRanking>
-                {
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.HeroLeague,
-                        CurrentMMR = heroLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.TeamLeague,
-                        CurrentMMR = teamLeagueRating,
-                        LeagueRank = null
-                    },
-                    new LeaderboardRanking
-                    {
-                        GameMode = GameMode.UnrankedDraft,
-                        CurrentMMR = unrankedRating,
-                        LeagueRank = unrankedRating
-                    },
-                }
-            };
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating, hasUnranked: true);
 
             var result = calculator.GetRatingFor(profile);
             Assert.That(result, Is.EqualTo(expectation));
@@ -263,7 +99,17 @@ namespace SlothThinking.Unit.Tests
             int unrankedRating, int expectation)
         {
             var calculator = new WeightedSlothRatingsCalculator();
-            var profile = new HotsLogsPlayerProfile
+            var profile = BuildFakeProfile(heroLeagueRating, teamLeagueRating, unrankedRating);
+
+            var result = calculator.GetRatingFor(profile);
+            Assert.That(result, Is.EqualTo(expectation));
+        }
+
+        private static IHotsLogsPlayerProfile BuildFakeProfile(int heroLeagueRating, int teamLeagueRating,
+            int unrankedRating
+            , bool hasHeroLeague = false, bool hasTeamLeague = false, bool hasUnranked = false)
+        {
+            return new HotsLogsPlayerProfile
             {
                 LeaderboardRankings = new List<LeaderboardRanking>
                 {
@@ -271,25 +117,22 @@ namespace SlothThinking.Unit.Tests
                     {
                         GameMode = GameMode.HeroLeague,
                         CurrentMMR = heroLeagueRating,
-                        LeagueRank = null
+                        LeagueRank = hasHeroLeague ? (int?) heroLeagueRating : null
                     },
                     new LeaderboardRanking
                     {
                         GameMode = GameMode.TeamLeague,
                         CurrentMMR = teamLeagueRating,
-                        LeagueRank = null
+                        LeagueRank = hasTeamLeague ? (int?) teamLeagueRating : null
                     },
                     new LeaderboardRanking
                     {
                         GameMode = GameMode.UnrankedDraft,
                         CurrentMMR = unrankedRating,
-                        LeagueRank = null
-                    },
+                        LeagueRank = hasUnranked ? (int?) unrankedRating : null
+                    }
                 }
             };
-
-            var result = calculator.GetRatingFor(profile);
-            Assert.That(result, Is.EqualTo(expectation));
         }
     }
 }

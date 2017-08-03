@@ -4,7 +4,7 @@ using RestSharp;
 
 namespace SlothThinking.Unit.Tests
 {
-    [TestFixture]
+    [TestFixture, Category("Integration")]
     public class SlothQueryServiceTests
     {
         private const string HEROES_LOUNGE_URL = "https://heroeslounge.gg/api/v1/";
