@@ -20,6 +20,12 @@ namespace SlothThinking.WebApp
             Get["/v1/teams", true] =
                 async (parameters, ct) => await GetTeams(parameters);
 
+            Get["/v1/players", true] = async (parameters, ct) =>
+            {
+                return await Task.FromResult(GetPlayers(parameters));
+            };
+           
+
             Post["/v1/teams", true] = async (x, ct) =>
             {
                 var request = this.Bind<TeamsRequest>();
@@ -27,8 +33,22 @@ namespace SlothThinking.WebApp
             };
         }
 
+        private dynamic GetPlayers(dynamic parameters)
+        {
+            var o = Request.Query["team"];
+            if (!o.HasValue)
+                return new JsonResponse("the parameter team must be specified", new DefaultJsonSerializer())
+                {
+                    StatusCode = HttpStatusCode.BadRequest
+                };
+
+            int teamId = int.Parse(o);
+            return  _service.GetPlayersForTeam(teamId);
+        }
+
         private async Task<dynamic> GetTeams(dynamic parameters)
         {
+
             var o = Request.Query["division"];
             if (!o.HasValue)
                 return new JsonResponse("the parameter division must be specified", new DefaultJsonSerializer())

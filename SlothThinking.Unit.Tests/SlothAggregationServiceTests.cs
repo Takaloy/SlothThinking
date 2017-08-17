@@ -25,5 +25,15 @@ namespace SlothThinking.Unit.Tests
             var result = sut.Get(3).ConfigureAwait(false).GetAwaiter().GetResult();
             slothQueryService.Received(1).GetTeams(3);
         }
+
+        [Test]
+        public void GetPlayersForTeam_CallsSlothQueryService()
+        {
+            var slothQueryService = Substitute.For<ISlothQueryService>();
+            var sut = new SlothAggregationService(slothQueryService);
+
+            var result = sut.GetPlayersForTeam(51);
+            slothQueryService.Received(1).GetPlayersSync(51);
+        }
     }
 }

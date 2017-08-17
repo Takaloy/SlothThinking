@@ -44,6 +44,18 @@ namespace SlothThinking
             return response.Data;
         }
 
+        public IEnumerable<ISloth> GetPlayersSync(int teamId)
+        {
+            var restRequest = new RestRequest($"/teams/{teamId}/sloths");
+
+            var response = _restClient.Execute<List<Sloth>>(restRequest);
+
+            if (response.StatusCode != HttpStatusCode.OK)
+                throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");
+
+            return response.Data;
+        }
+
         /// <summary>
         /// it is annoying having to have a seperate package (newtonsoft) to manage this.
         /// submitted https://github.com/kealsera/rikki/issues/30 

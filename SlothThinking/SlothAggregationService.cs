@@ -8,6 +8,8 @@ namespace SlothThinking
     public interface ISlothAggregationService
     {
         Task<IEnumerable<ILoungeTeam>> Get(int division);
+        IEnumerable<ISloth> GetPlayersForTeam(int teamId);
+        
     }
 
     public class SlothAggregationService : ISlothAggregationService
@@ -31,6 +33,12 @@ namespace SlothThinking
 
             var tasks = teams.Select(Get).ToList();
             return (await Task.WhenAll(tasks)).ToList();
+        }
+
+        public IEnumerable<ISloth> GetPlayersForTeam(int teamId)
+        {
+            var players = _slothQueryService.GetPlayersSync(teamId);
+            return players;
         }
 
         private async Task<ILoungeTeam> Get(ISlothTeamInfo slothTeam)
