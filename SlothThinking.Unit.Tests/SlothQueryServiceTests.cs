@@ -46,6 +46,15 @@ namespace SlothThinking.Unit.Tests
             Assert.That(players.Count(), Is.GreaterThan(0));
         }
 
+        [TestCase(51)]
+        public void GetPlayersReturnsNonEmptyResponseWhenCalledSynchronously(int teamId)
+        {
+            var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
+            var players = slothService.GetPlayersSync(teamId);
+
+            Assert.That(players.Count(), Is.GreaterThan(0));
+        }
+
         [Test]
         public void CanGetReplaysForMatches()
         {

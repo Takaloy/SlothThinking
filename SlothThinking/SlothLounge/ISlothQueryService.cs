@@ -7,6 +7,7 @@ namespace SlothThinking
     {
         Task<IEnumerable<ISlothTeamInfo>> GetTeams(int division);
         Task<IEnumerable<ISloth>> GetPlayers(int teamId);
+        IEnumerable<ISloth> GetPlayersSync(int teamId);
         Task<IEnumerable<ILoungeReplay>> GetReplaysForMatch(int matchId);
     }
 }
