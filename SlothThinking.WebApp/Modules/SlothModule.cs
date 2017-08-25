@@ -18,18 +18,14 @@ namespace SlothThinking.WebApp
             _service = service;
 
             Get["/v1/teams", true] =
-                async (parameters, ct) => await GetTeams(parameters);
+                async (parameters, ct) => await GetTeams(parameters).ConfigureAwait(false);
 
-            Get["/v1/players", true] = async (parameters, ct) =>
-            {
-                return await Task.FromResult(GetPlayers(parameters));
-            };
-           
+            Get["/v1/players", true] = async (parameters, ct) => await Task.FromResult(GetPlayers(parameters)).ConfigureAwait(false);
 
             Post["/v1/teams", true] = async (x, ct) =>
             {
                 var request = this.Bind<TeamsRequest>();
-                return await _service.Get(request.Division);
+                return await _service.Get(request.Division).ConfigureAwait(false);
             };
         }
 
@@ -57,7 +53,7 @@ namespace SlothThinking.WebApp
                 };
 
             int division = int.Parse(o);
-            return await _service.Get(division);
+            return await _service.Get(division).ConfigureAwait(false);
         }
     }
 

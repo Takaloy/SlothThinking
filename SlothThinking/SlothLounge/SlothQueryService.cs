@@ -23,7 +23,7 @@ namespace SlothThinking
             var restRequest = new RestRequest($"/divisions/{division}/teams");
             var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT_IN_SECONDS));
 
-            var response = await _restClient.ExecuteTaskAsync<List<SlothTeamInfo>>(restRequest, cancellationToken.Token);
+            var response = await _restClient.ExecuteTaskAsync<List<SlothTeamInfo>>(restRequest, cancellationToken.Token).ConfigureAwait(false);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");
@@ -36,7 +36,7 @@ namespace SlothThinking
             var restRequest = new RestRequest($"/teams/{teamId}/sloths");
             var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT_IN_SECONDS));
 
-            var response = await _restClient.ExecuteTaskAsync<List<Sloth>>(restRequest, cancellationToken.Token);
+            var response = await _restClient.ExecuteTaskAsync<List<Sloth>>(restRequest, cancellationToken.Token).ConfigureAwait(false);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");
@@ -68,7 +68,7 @@ namespace SlothThinking
             restRequest.AddHeader("Accept", "application/json");
             var cancellationToken = new CancellationTokenSource(TimeSpan.FromSeconds(TIMEOUT_IN_SECONDS));
 
-            var response = await _restClient.ExecuteTaskAsync(restRequest, cancellationToken.Token);
+            var response = await _restClient.ExecuteTaskAsync(restRequest, cancellationToken.Token).ConfigureAwait(false);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception($"Status Code {response.StatusCode}. {response.ErrorMessage}");

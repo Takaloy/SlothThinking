@@ -32,7 +32,7 @@ namespace SlothThinking
             var teams = await _slothQueryService.GetTeams(division).ConfigureAwait(false);
 
             var tasks = teams.Select(Get).ToList();
-            return (await Task.WhenAll(tasks)).ToList();
+            return (await Task.WhenAll(tasks).ConfigureAwait(false)).ToList();
         }
 
         public IEnumerable<ISloth> GetPlayersForTeam(int teamId)
@@ -43,7 +43,7 @@ namespace SlothThinking
 
         private async Task<ILoungeTeam> Get(ISlothTeamInfo slothTeam)
         {
-            var players = await _slothQueryService.GetPlayers(slothTeam.Id);
+            var players = await _slothQueryService.GetPlayers(slothTeam.Id).ConfigureAwait(false);
             var loungeTeam = new LoungeTeam(slothTeam, players);
             return loungeTeam;
         }

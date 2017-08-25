@@ -28,7 +28,7 @@ namespace SlothThinking
 
             var tasks = team.Players.Select(GetSlothRatingsFor).ToList();
 
-            foreach (var tuple in await Task.WhenAll(tasks))
+            foreach (var tuple in await Task.WhenAll(tasks).ConfigureAwait(false))
             {
                 var player = tuple.Item1;
                 var rating = tuple.Item2;
@@ -53,7 +53,7 @@ namespace SlothThinking
 
         private async Task<Tuple<ISloth, int>> GetSlothRatingsFor(ISloth player)
         {
-            var rating = await GetRatingFor(player);
+            var rating = await GetRatingFor(player).ConfigureAwait(false);
             return new Tuple<ISloth, int>(player, rating);
         }
 
@@ -61,7 +61,7 @@ namespace SlothThinking
         {
             var restRequest = new RestRequest($"/Public/Players/2/{player.BattleTag.Replace("#", "_")}");
             var cts = new CancellationTokenSource(TimeSpan.FromSeconds(10));
-            var response = await _restClient.ExecuteTaskAsync<HotsLogsPlayerProfile>(restRequest, cts.Token);
+            var response = await _restClient.ExecuteTaskAsync<HotsLogsPlayerProfile>(restRequest, cts.Token).ConfigureAwait(false);
 
             if (response.StatusCode != HttpStatusCode.OK)
                 throw new Exception(response.StatusCode.ToString());
