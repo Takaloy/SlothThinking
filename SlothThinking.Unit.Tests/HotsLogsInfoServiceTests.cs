@@ -1,5 +1,7 @@
 ﻿using System;
+using System.Collections.Generic;
 using System.Linq;
+using System.Linq.Expressions;
 using NUnit.Framework;
 using RestSharp;
 
@@ -25,30 +27,40 @@ namespace SlothThinking.Unit.Tests
 
             var rating = hotsLogsInfoService.GetRatingFor(randomteam).ConfigureAwait(false).GetAwaiter().GetResult();
             
-            Assert.That(rating, Is.GreaterThan(0));
+            Assert.That(rating.WeightedRating, Is.GreaterThan(0));
         }
 
         #region spam
-        //[Test]
-        //public void Print()
-        //{
-        //    var slothQueryService = new SlothQueryService(new RestClient("https://heroeslounge.gg/api/v1/"));
-        //    var hotsLogsInfoService = new HotsLogsInfoService(new RestClient(HOTSLOGS_URL), new WeightedSlothRatingsCalculator());
+        [Test, Ignore("run this if you want to output the result. this is usually slow")]
+        public void Print()
+        {
+            var slothQueryService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
+            var hotsLogsInfoService = new HotsLogsInfoService(new RestClient(HOTSLOGS_URL), new WeightedSlothRatingsCalculator());
 
-        //    var slothAggregationSevice = new SlothAggregationService(slothQueryService);
-            
-        //    for (var i = 1; i <= 5; i++)
-        //    {
-        //        var teams = slothAggregationSevice.Get(i).ConfigureAwait(false).GetAwaiter().GetResult();
+            var slothAggregationSevice = new SlothAggregationService(slothQueryService);
 
-        //        foreach (var team in teams)
-        //        {
-        //            var rating = hotsLogsInfoService.GetRatingFor(team).ConfigureAwait(false).GetAwaiter().GetResult(); ;
-        //            Console.WriteLine($"{team.Title} : {i} : {rating} ");
-        //        }
-        //    }
-            
-        //}
+            var results = new List<string>();
+            try
+            {
+                for (var i = 1; i <= 5; i++)
+                {
+                    var teams = slothAggregationSevice.Get(i).ConfigureAwait(false).GetAwaiter().GetResult();
+
+                    results.AddRange(from team in teams
+                        let rating = hotsLogsInfoService.GetRatingFor(team)
+                            .ConfigureAwait(false)
+                            .GetAwaiter()
+                            .GetResult()
+                        select $"{team.Title},{i},{rating.WeightedRating},{rating.PlayersRated}");
+                }
+            }
+            catch (Exception exception)
+            {
+                Console.WriteLine($"exception : {exception.Message}");
+            }
+
+            System.IO.File.WriteAllLines($"{AppDomain.CurrentDomain.BaseDirectory}\\Print.csv", results);
+        }
         #endregion
     }
 }

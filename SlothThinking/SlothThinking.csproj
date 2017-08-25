@@ -51,7 +51,9 @@
     <Compile Include="HotsLogs\HotsLogsPlayerProfile.cs" />
     <Compile Include="HotsLogs\IHotsLogsInfoService.cs" />
     <Compile Include="HotsLogs\IHotsLogsPlayerProfile.cs" />
+    <Compile Include="HotsLogs\ITeamRating.cs" />
     <Compile Include="HotsLogs\LeaderboardRanking.cs" />
+    <Compile Include="HotsLogs\TeamRatingAccordingToHotsLogs.cs" />
     <Compile Include="ILoungeTeam.cs" />
     <Compile Include="LoungeTeam.cs" />
     <Compile Include="SlothAggregationService.cs" />

@@ -8,7 +8,6 @@ using RestSharp;
 
 namespace SlothThinking
 {
-
     public class HotsLogsInfoService : IHotsLogsInfoService
     {
         private readonly IRestClient _restClient;
@@ -23,7 +22,7 @@ namespace SlothThinking
             _calculator = calculator;
         }
 
-        public async Task<int> GetRatingFor(ILoungeTeam team)
+        public async Task<ITeamRating> GetRatingFor(ILoungeTeam team)
         {
             var playerWithRatings = new Dictionary<ISloth, int>();
 
@@ -39,10 +38,17 @@ namespace SlothThinking
             }
 
             if (playerWithRatings.Count == 0)
-                return 0;
+                return TeamRatingAccordingToHotsLogs.Empty();
 
             var totalRating = playerWithRatings.Values.Sum();
-            return totalRating / playerWithRatings.Count;
+            var weightedRating = totalRating / playerWithRatings.Count;
+
+            return new TeamRatingAccordingToHotsLogs
+            {
+                WeightedRating = weightedRating,
+                PlayersRated = Math.Round((decimal) playerWithRatings.Count / (decimal) team.Players.Count(),2)
+            };
+
         }
 
         private async Task<Tuple<ISloth, int>> GetSlothRatingsFor(ISloth player)
