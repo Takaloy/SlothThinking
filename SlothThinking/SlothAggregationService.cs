@@ -29,7 +29,7 @@ namespace SlothThinking
             if (division < 1 || division > 5)
                 throw new ArgumentException($"don't think we have division {division} .. ");    //https://heroeslounge.gg/api/v1/divisions/ service for checks in future
 
-            var teams = await _slothQueryService.GetTeams(division);
+            var teams = await _slothQueryService.GetTeams(division).ConfigureAwait(false);
 
             var tasks = teams.Select(Get).ToList();
             return (await Task.WhenAll(tasks)).ToList();
