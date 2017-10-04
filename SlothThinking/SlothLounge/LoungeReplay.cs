@@ -11,6 +11,7 @@ namespace SlothThinking
         string ContentType { get; set; }
         DateTime CreatedAt { get; set; }
         string Path { get; set; }
+        string Extension { get; set; }
     }
 
     public class LoungeReplay : ILoungeReplay

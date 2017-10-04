@@ -1,10 +1,13 @@
 ﻿using System;
 using System.Collections.Generic;
+using System.IO;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using Newtonsoft.Json.Serialization;
 using RestSharp;
+using RestSharp.Extensions;
 
 namespace SlothThinking
 {
@@ -59,6 +62,7 @@ namespace SlothThinking
         /// <summary>
         /// it is annoying having to have a seperate package (newtonsoft) to manage this.
         /// submitted https://github.com/kealsera/rikki/issues/30 
+        /// BUG: does not serealize understore to pascalcase correctly
         /// </summary>
         /// <param name="matchId"></param>
         /// <returns></returns>
@@ -75,6 +79,25 @@ namespace SlothThinking
 
             var content = JsonConvert.DeserializeObject<List<LoungeReplay>>(response.Content);
             return content;
+        }
+
+        /// <summary>
+        /// not adding this to interface YET. as I think we should figure if we want to save it locally or use the API as a passthrough
+        /// </summary>
+        /// <param name="replays"></param>
+        /// <param name="targetDirectory"></param>
+        public void SaveReplaysTo(IEnumerable<ILoungeReplay> replays, string targetDirectory)
+        {
+            if (!Directory.Exists(targetDirectory))
+                Directory.CreateDirectory(targetDirectory);
+
+            foreach (var loungeReplay in replays)
+            {
+                
+                var restClient = new RestClient(loungeReplay.Path);
+                var saveFileName = Path.Combine(targetDirectory, $"{loungeReplay.Id}.{loungeReplay.Extension}");
+                restClient.DownloadData(new RestRequest()).SaveAs(saveFileName);
+            }
         }
     }
 }

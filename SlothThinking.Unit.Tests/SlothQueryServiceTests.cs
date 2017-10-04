@@ -1,4 +1,5 @@
-﻿using System.Collections.Generic;
+﻿using System;
+using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using RestSharp;
@@ -62,6 +63,14 @@ namespace SlothThinking.Unit.Tests
             var replays = slothService.GetReplaysForMatch(119).ConfigureAwait(false).GetAwaiter().GetResult();
 
             Assert.That(replays.Count(), Is.EqualTo(2));
+        }
+
+        [Test]
+        public void CanSaveReplayFilesForMatches()
+        {
+            var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
+            var replays = slothService.GetReplaysForMatch(119).ConfigureAwait(false).GetAwaiter().GetResult();
+            Assert.DoesNotThrow(() => slothService.SaveReplaysTo(replays, $"{AppDomain.CurrentDomain.BaseDirectory}\\Replays"));
         }
     }
 }
