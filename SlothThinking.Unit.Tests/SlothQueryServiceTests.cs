@@ -1,5 +1,4 @@
 ﻿using System;
-using System.Collections.Generic;
 using System.Linq;
 using NUnit.Framework;
 using RestSharp;
@@ -56,20 +55,21 @@ namespace SlothThinking.Unit.Tests
             Assert.That(players.Count(), Is.GreaterThan(0));
         }
 
-        [Test]
-        public void CanGetReplaysForMatches()
+        [TestCase(119)]
+        public void CanGetReplaysForMatches(int matchId)
         {
             var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
-            var replays = slothService.GetReplaysForMatch(119).ConfigureAwait(false).GetAwaiter().GetResult();
+            var replays = slothService.GetReplaysForMatch(matchId).ConfigureAwait(false).GetAwaiter().GetResult().ToList();
 
             Assert.That(replays.Count(), Is.EqualTo(2));
+            Assert.That(string.IsNullOrEmpty(replays.First().DiskName), Is.False);
         }
 
-        [Test]
-        public void CanSaveReplayFilesForMatches()
+        [TestCase(119)]
+        public void CanSaveReplayFilesForMatches(int matchId)
         {
             var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
-            var replays = slothService.GetReplaysForMatch(119).ConfigureAwait(false).GetAwaiter().GetResult();
+            var replays = slothService.GetReplaysForMatch(matchId).ConfigureAwait(false).GetAwaiter().GetResult();
             Assert.DoesNotThrow(() => slothService.SaveReplaysTo(replays, $"{AppDomain.CurrentDomain.BaseDirectory}\\Replays"));
         }
     }

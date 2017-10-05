@@ -1,4 +1,5 @@
 using System;
+using Newtonsoft.Json;
 
 namespace SlothThinking
 {
@@ -17,17 +18,30 @@ namespace SlothThinking
     public class LoungeReplay : ILoungeReplay
     {
         public int Id { get; set; }
+
+        [JsonProperty("disk_name")]
         public string DiskName { get; set; }
+
+        [JsonProperty("file_name")]
         public string FileName { get; set; }
+
+        [JsonProperty("file_size")]
         public int FileSize { get; set; }
+
+        [JsonProperty("content_type")]
         public string ContentType { get; set; }
-        public string Title { get; set; }
-        public string Description { get; set; }
-        public string Field { get; set; }
+
+        [JsonProperty("sort_order")]
         public int SortOrder { get; set; }
+
+        [JsonProperty("created_at")]
         public DateTime CreatedAt { get; set; }
+
+        [JsonProperty("updatred_at")]
         public DateTime UpdatedAt { get; set; }
+
         public string Path { get; set; }
+
         public string Extension { get; set; }
     }
 }
