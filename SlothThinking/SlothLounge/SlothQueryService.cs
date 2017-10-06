@@ -1,6 +1,7 @@
 ﻿using System;
 using System.Collections.Generic;
 using System.IO;
+using System.Linq;
 using System.Net;
 using System.Threading;
 using System.Threading.Tasks;
@@ -88,14 +89,20 @@ namespace SlothThinking
         /// <param name="targetDirectory"></param>
         public void SaveReplaysTo(IEnumerable<ILoungeReplay> replays, string targetDirectory)
         {
+            var loungeReplays = replays as ILoungeReplay[] ?? replays.ToArray();
+            if (!loungeReplays.Any() || loungeReplays.Any(r => r == null))
+                return;
+
             if (!Directory.Exists(targetDirectory))
                 Directory.CreateDirectory(targetDirectory);
 
-            foreach (var loungeReplay in replays)
+            foreach (var loungeReplay in loungeReplays)
             {
                 
                 var restClient = new RestClient(loungeReplay.Path);
-                var saveFileName = Path.Combine(targetDirectory, $"{loungeReplay.Id}.{loungeReplay.Extension}");
+                var saveFileName = Path.Combine(targetDirectory, $"{loungeReplay.DiskName}");
+                if (File.Exists(saveFileName))
+                    return;
                 restClient.DownloadData(new RestRequest()).SaveAs(saveFileName);
             }
         }

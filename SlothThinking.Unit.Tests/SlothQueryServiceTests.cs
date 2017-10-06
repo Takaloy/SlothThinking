@@ -69,8 +69,22 @@ namespace SlothThinking.Unit.Tests
         public void CanSaveReplayFilesForMatches(int matchId)
         {
             var slothService = new SlothQueryService(new RestClient(HEROES_LOUNGE_URL));
-            var replays = slothService.GetReplaysForMatch(matchId).ConfigureAwait(false).GetAwaiter().GetResult();
-            Assert.DoesNotThrow(() => slothService.SaveReplaysTo(replays, $"{AppDomain.CurrentDomain.BaseDirectory}\\Replays"));
+
+            for (var i = 1; i < 631; i++)
+            {
+                try
+                {
+                    var replays = slothService.GetReplaysForMatch(i).ConfigureAwait(false).GetAwaiter().GetResult();
+                    slothService.SaveReplaysTo(replays, $"{AppDomain.CurrentDomain.BaseDirectory}\\Replays");
+                }
+                catch (Exception)
+                {
+                    Console.WriteLine($"failed at {i}");
+                    //throw;
+                }
+            }
+
+            //Assert.DoesNotThrow(() => slothService.SaveReplaysTo(replays, $"{AppDomain.CurrentDomain.BaseDirectory}\\Replays"));
         }
     }
 }
